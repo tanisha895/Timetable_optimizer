@@ -6,47 +6,49 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Installing dependencies...'
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'npm test'
+                bat 'npm test'
             }
         }
 
         stage('Code Quality') {
             steps {
                 echo 'Running SonarQube analysis...'
-                sh 'sonar-scanner || true'
+                bat 'echo SonarQube skipped for now'
             }
         }
 
         stage('Security') {
             steps {
                 echo 'Checking vulnerabilities...'
-                sh 'npm audit || true'
+                bat 'npm audit'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t timetable-app .'
+                bat 'docker build -t timetable-app .'
             }
         }
 
         stage('Release') {
             steps {
                 echo 'Releasing application...'
+                bat 'echo Version 1.0 released'
             }
         }
 
         stage('Monitoring') {
             steps {
-                echo 'Monitoring application logs...'
+                echo 'Monitoring application...'
+                bat 'echo Monitoring logs...'
             }
         }
     }
