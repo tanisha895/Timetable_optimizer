@@ -34,7 +34,13 @@ pipeline {
 stage('Deploy') {
     steps {
         echo 'Building Docker image...'
-        bat 'docker build -t timetable-app . || echo Docker not installed, skipping'
+        bat '''
+        docker build -t timetable-app . 
+        IF %ERRORLEVEL% NEQ 0 (
+            echo Docker not installed, skipping
+            exit /b 0
+        )
+        '''
     }
 }
 
